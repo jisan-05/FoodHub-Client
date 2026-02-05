@@ -72,7 +72,7 @@ export default function ProfileMenu({
               onClick={() => setOpen(false)}
               className="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-yellow-50 hover:text-yellow-600 transition"
             >
-              Edit Profile
+              Profile
             </Link>
 
             <Link

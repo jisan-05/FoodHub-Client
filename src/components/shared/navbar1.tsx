@@ -130,8 +130,8 @@ const Navbar1 = ({
     <ProfileMenu
       name={session.data?.user.name}
       email={session.data?.user.email}
-      // image={session.data.user.image}
-      image="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80"
+      image={session.data.user.image}
+      // image="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80"
     />
   ) : (
     <>
