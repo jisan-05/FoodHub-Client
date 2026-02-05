@@ -47,20 +47,20 @@ export default function ProfileMenu({
       {/* Profile Image Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="rounded-full border border-gray-200 bg-white p-1 shadow-sm hover:bg-gray-50 transition"
+        className="rounded-full border border-gray-300 bg-white p-1 shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-yellow-500"
       >
         <img
           src={image}
           alt="profile"
-          className="h-9 w-9 rounded-full object-cover"
+          className="h-10 w-10 rounded-full object-cover"
         />
       </button>
 
       {/* Dropdown Menu */}
       {open && (
-        <div className="absolute right-0 mt-2 w-56 rounded-xl border border-gray-200 bg-white shadow-lg z-50">
+        <div className="absolute right-0 mt-3 w-60 rounded-xl border border-gray-200 bg-white shadow-xl z-50 animate-slideDown">
           {/* User Info */}
-          <div className="px-4 py-3 border-b">
+          <div className="px-4 py-3 border-b border-gray-100">
             <p className="text-sm font-semibold text-gray-800">{name}</p>
             <p className="text-xs text-gray-500 truncate">{email}</p>
           </div>
@@ -70,7 +70,7 @@ export default function ProfileMenu({
             <Link
               href="/profile"
               onClick={() => setOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-yellow-50 hover:text-yellow-600 transition"
             >
               Edit Profile
             </Link>
@@ -78,7 +78,7 @@ export default function ProfileMenu({
             <Link
               href="/dashboard"
               onClick={() => setOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-yellow-50 hover:text-yellow-600 transition"
             >
               Dashboard
             </Link>
@@ -88,7 +88,7 @@ export default function ProfileMenu({
                 setOpen(false);
                 handleLogout();
               }}
-              className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+              className="w-full text-left px-4 py-2 text-sm text-red-600 rounded-lg hover:bg-red-50 transition"
             >
               Logout
             </button>

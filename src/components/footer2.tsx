@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-
 import { Logo, LogoImage, LogoText } from "@/components/logo";
 
 interface MenuItem {
@@ -30,12 +29,12 @@ interface Footer2Props {
 const Footer2 = ({
   logo = {
     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg",
-    alt: "blocks for shadcn/ui",
-    title: "FoodHub Restaurent",
+    alt: "FoodHub Logo",
+    title: "FoodHub",
     url: "/",
   },
   className,
-  tagline = "FootHub is a Usa Restaurent.",
+  tagline = "Discover & Order Delicious Meals",
   menuItems = [
     {
       title: "Product",
@@ -45,7 +44,6 @@ const Footer2 = ({
         { text: "Marketplace", url: "#" },
         { text: "Features", url: "#" },
         { text: "Integrations", url: "#" },
-        { text: "Pricing", url: "#" },
       ],
     },
     {
@@ -56,19 +54,18 @@ const Footer2 = ({
         { text: "Blog", url: "#" },
         { text: "Careers", url: "#" },
         { text: "Contact", url: "#" },
-        { text: "Privacy", url: "#" },
       ],
     },
     {
       title: "Resources",
       links: [
-        { text: "Help", url: "#" },
+        { text: "Help Center", url: "#" },
         { text: "Sales", url: "#" },
         { text: "Advertise", url: "#" },
       ],
     },
     {
-      title: "Social",
+      title: "Follow Us",
       links: [
         { text: "Twitter", url: "#" },
         { text: "Instagram", url: "#" },
@@ -76,40 +73,48 @@ const Footer2 = ({
       ],
     },
   ],
-  copyright = "© 2024 Shadcnblocks.com. All rights reserved.",
+  copyright = "© 2026 FoodHub. All rights reserved.",
   bottomLinks = [
-    { text: "Terms and Conditions", url: "#" },
+    { text: "Terms & Conditions", url: "#" },
     { text: "Privacy Policy", url: "#" },
   ],
 }: Footer2Props) => {
   return (
-    <section className={cn("py-32", className)}>
-      <div className="container mx-auto px-2">
+    <section className={cn("bg-gray-900 text-white py-24", className)}>
+      <div className="container mx-auto px-4">
         <footer>
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
+            {/* Logo + Tagline */}
             <div className="col-span-2 mb-8 lg:mb-0">
-              <div className="flex items-center gap-2 lg:justify-start">
-                <Logo url="https://shadcnblocks.com">
+              <div className="flex items-center gap-3 lg:justify-start">
+                <Logo url={logo.url}>
                   <LogoImage
                     src={logo.src}
                     alt={logo.alt}
                     title={logo.title}
                     className="h-10 dark:invert"
                   />
-                  <LogoText className="text-xl">{logo.title}</LogoText>
+                  <LogoText className="text-2xl font-bold">{logo.title}</LogoText>
                 </Logo>
               </div>
-              <p className="mt-4 font-bold">{tagline}</p>
+              <p className="mt-4 text-gray-300 font-medium">{tagline}</p>
+              
+              {/* Optional CTA */}
+              <a
+                href="#"
+                className="inline-block mt-6 bg-yellow-500 text-gray-900 font-semibold px-6 py-2 rounded-lg hover:bg-yellow-400 transition"
+              >
+                Order Now
+              </a>
             </div>
-            {menuItems.map((section, sectionIdx) => (
-              <div key={sectionIdx}>
-                <h3 className="mb-4 font-bold">{section.title}</h3>
-                <ul className="space-y-4 text-muted-foreground">
+
+            {/* Menu Sections */}
+            {menuItems.map((section, idx) => (
+              <div key={idx}>
+                <h3 className="mb-4 font-semibold text-white">{section.title}</h3>
+                <ul className="space-y-3 text-gray-400">
                   {section.links.map((link, linkIdx) => (
-                    <li
-                      key={linkIdx}
-                      className="font-medium hover:text-primary"
-                    >
+                    <li key={linkIdx} className="hover:text-yellow-500 transition">
                       <a href={link.url}>{link.text}</a>
                     </li>
                   ))}
@@ -117,11 +122,13 @@ const Footer2 = ({
               </div>
             ))}
           </div>
-          <div className="mt-24 flex flex-col justify-between gap-4 border-t pt-8 text-sm font-medium text-muted-foreground md:flex-row md:items-center">
+
+          {/* Bottom Links & Copyright */}
+          <div className="mt-16 flex flex-col md:flex-row md:justify-between md:items-center border-t border-gray-700 pt-6 text-sm text-gray-400">
             <p>{copyright}</p>
-            <ul className="flex gap-4">
-              {bottomLinks.map((link, linkIdx) => (
-                <li key={linkIdx} className="underline hover:text-primary">
+            <ul className="flex gap-6 mt-4 md:mt-0">
+              {bottomLinks.map((link, idx) => (
+                <li key={idx} className="hover:text-yellow-500 underline transition">
                   <a href={link.url}>{link.text}</a>
                 </li>
               ))}

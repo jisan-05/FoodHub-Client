@@ -12,10 +12,9 @@ type Provider = {
   createdAt: string;
 };
 
-
-const ProviderPage = async() => {
-    const {data} = await providerService.getProvider()
-    console.log("from fetch provider ",data)
+const ProviderPage = async () => {
+  const { data } = await providerService.getProvider();
+  console.log("from fetch provider ", data);
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page Header */}
@@ -30,23 +29,23 @@ const ProviderPage = async() => {
 
       {/* Provider List */}
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-        {data.map((provider:Provider) => (
+        {data.map((provider: Provider) => (
           <div
             key={provider.id}
             className="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden"
           >
             {/* Image */}
             <div className="relative h-56 w-full">
-             <Image
-  src={
-    provider.image?.startsWith("http")
-      ? provider.image
-      : "/images/restaurant-placeholder.jpg"
-  }
-  alt={provider.restaurantName}
-  fill
-  className="object-cover"
-/>
+              <Image
+                src={
+                  provider.image?.startsWith("http")
+                    ? provider.image
+                    : "/images/restaurant-placeholder.jpg"
+                }
+                alt={provider.restaurantName}
+                fill
+                className="object-cover"
+              />
             </div>
 
             {/* Content */}
@@ -66,8 +65,7 @@ const ProviderPage = async() => {
               {/* Meta */}
               <div className="mt-6 flex items-center justify-between">
                 <span className="text-xs text-gray-400">
-                  Opened on{" "}
-                  {new Date(provider.createdAt).toLocaleDateString()}
+                  Opened on {new Date(provider.createdAt).toLocaleDateString()}
                 </span>
 
                 <button className="px-5 py-2 rounded-full bg-orange-500 text-white text-sm font-medium hover:bg-orange-600 transition">
