@@ -1,6 +1,6 @@
 "use client";
 
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
+import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -13,11 +13,9 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
@@ -26,7 +24,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import ProfileMenu from "../ui/profileMenu";
 
 interface MenuItem {
   title: string;
@@ -69,17 +70,16 @@ const Navbar1 = ({
     { title: "Home", url: "/" },
     {
       title: "Meals",
-      url: "/meals"
+      url: "/meals",
     },
     {
       title: "Restaurants",
-      url: "/prividers"
-     
+      url: "/providers",
     },
     {
       title: "Orders",
       url: "/myOrders",
-    }
+    },
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -87,6 +87,19 @@ const Navbar1 = ({
   },
   className,
 }: Navbar1Props) => {
+  const [session, setSession] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getSession = async () => {
+      const sessionData = await authClient.getSession();
+      setSession(sessionData);
+      setLoading(false);
+    };
+
+    getSession();
+  }, []);
+  
   return (
     <section className={cn("py-4", className)}>
       <div className="container mx-auto px-2">
@@ -94,7 +107,7 @@ const Navbar1 = ({
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-6">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
+            <Link href={logo.url} className="flex items-center gap-2">
               {/* <img
                 src={logo.src}
                 className="max-h-8 dark:invert"
@@ -103,7 +116,7 @@ const Navbar1 = ({
               <span className="text-lg font-semibold tracking-tighter">
                 {logo.title}
               </span>
-            </a>
+            </Link>
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
@@ -112,14 +125,25 @@ const Navbar1 = ({
               </NavigationMenu>
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <Link href={auth.login.url}>{auth.login.title}</Link>
-            </Button>
-            <Button asChild size="sm">
-              <Link href={auth.signup.url}>{auth.signup.title}</Link>
-            </Button>
-          </div>
+        <div className="flex gap-2">
+  {!loading && session.data ? (
+    <ProfileMenu
+      name={session.data?.user.name}
+      email={session.data?.user.email}
+      // image={session.data.user.image}
+      image="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80"
+    />
+  ) : (
+    <>
+      <Button asChild variant="outline" size="sm">
+        <Link href={auth.login.url}>{auth.login.title}</Link>
+      </Button>
+      <Button asChild size="sm">
+        <Link href={auth.signup.url}>{auth.signup.title}</Link>
+      </Button>
+    </>
+  )}
+</div>
         </nav>
 
         {/* Mobile Menu */}
@@ -199,9 +223,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
         <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">
           {item.title}
         </AccordionTrigger>
-        <AccordionContent className="mt-2">
-          
-        </AccordionContent>
+        <AccordionContent className="mt-2"></AccordionContent>
       </AccordionItem>
     );
   }
@@ -212,7 +234,5 @@ const renderMobileMenuItem = (item: MenuItem) => {
     </Link>
   );
 };
-
-
 
 export { Navbar1 };

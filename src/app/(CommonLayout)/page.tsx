@@ -1,18 +1,24 @@
+import CategorySection from "@/components/modules/Home/CategorySection ";
 import BannerSlider from "@/components/modules/Home/Slider";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { categoryService } from "@/services/category.service";
+import { providerService } from "@/services/provider.service";
 
-export default function Home() {
+export default async function Home() {
+  const categories = await categoryService.getCategorys();
+  console.log(categories);
+      const providers = await providerService.getProvider()
+
+      console.log(providers)
   return (
-    <div className="w-full h-[60vh]">
+    <div className="w-full ">
       {/* Banner Slider */}
       <BannerSlider />
 
+      {/* category  */}
+      <CategorySection/>
       {/* Other Sections */}
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold mb-4">
-          Featured Meals
-        </h2>
+        <h2 className="text-2xl font-semibold mb-4">Featured Meals</h2>
         {/* featured meals grid */}
       </section>
     </div>
