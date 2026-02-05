@@ -1,7 +1,7 @@
 import React from 'react';
 
-const UserDetault = () => {
+const UserDefault = () => {
     return null
 };
 
-export default UserDetault;
+export default UserDefault;
