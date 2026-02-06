@@ -4,7 +4,7 @@ import Link from "next/link";
 const ProfilePage = async () => {
   const user = await userService.getSession();
   const userInfo = user.data.user;
-  console.log(userInfo);
+  // console.log(userInfo);
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">

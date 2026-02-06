@@ -14,7 +14,7 @@ type Provider = {
 
 const ProviderPage = async () => {
   const { data } = await providerService.getProvider();
-  console.log("from fetch provider ", data);
+  // console.log("from fetch provider ", data);
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page Header */}

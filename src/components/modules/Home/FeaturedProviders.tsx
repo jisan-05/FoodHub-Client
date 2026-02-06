@@ -1,4 +1,5 @@
 import { providerService } from '@/services/provider.service';
+import Link from 'next/link';
 import React from 'react';
 
 const FeaturedProviders = async () => {
@@ -36,7 +37,9 @@ const FeaturedProviders = async () => {
                   {provider.description}
                 </p>
                 <button className="mt-4 bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded-lg hover:bg-yellow-400 transition">
+                  <Link href={`/provider-menu/${provider.id}`}>
                   View Menu
+                  </Link>
                 </button>
               </div>
             </div>
