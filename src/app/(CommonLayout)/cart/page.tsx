@@ -29,6 +29,9 @@ const CartPage = () => {
       setLoading(true);
       const { data, error } = await ordersService.getAddToCartData();
 
+                // console.log("from cart count", data);
+
+
       if (error) {
         alert(error.message);
         setLoading(false);
@@ -39,7 +42,7 @@ const CartPage = () => {
         // Merge duplicate meals
         const map = new Map<string, CartItem>();
         data.forEach((order: any) => {
-          order.orderItems.forEach((item: any) => {
+          order.orderItemForCarts.forEach((item: any) => {
             const mealId = item.meal.id;
             if (map.has(mealId)) {
               const existing = map.get(mealId)!;

@@ -23,7 +23,7 @@ export const ordersService = {
 
   getAddToCartData: async () => {
     try {
-      const res = await fetch(`${API_URL}/api/customer/orders`, {
+      const res = await fetch(`${API_URL}/api/customer/orders-cart`, {
         credentials: "include", // ✅ REQUIRED
       });
 

@@ -93,43 +93,43 @@ const Navbar1 = ({
   const [loading, setLoading] = useState(true);
   const [cartCount, setCartCount] = useState(0);
 
- useEffect(() => {
-  const getCartCount = async () => {
+// Helper function to calculate total cart count
+const calculateCartCount = (orders: any[]) => {
+  return orders.reduce((sum, order) => {
+    const cartQty = order.orderItemForCarts?.reduce(
+      (itemSum: number, item: any) => itemSum + item.quantity,
+      0
+    ) ?? 0;
+    return sum + cartQty;
+  }, 0);
+};
+
+// Initial fetch of cart count
+useEffect(() => {
+  const fetchCart = async () => {
     try {
       const res = await ordersService.getAddToCartData();
-
-      if (!res?.data || res?.data?.length === 0) {
+      if (Array.isArray(res.data)) {
+        setCartCount(calculateCartCount(res.data));
+      } else {
         setCartCount(0);
-        return;
       }
-
-      const orders = res.data;
-
-      // Sum all orderItems quantities across all orders
-      const totalQty = orders.reduce((sum: number, order: any) => {
-        const orderItemQty = order.orderItems?.reduce(
-          (itemSum: number, item: any) => itemSum + item.quantity,
-          0
-        );
-        return sum + orderItemQty;
-      }, 0);
-
-      setCartCount(totalQty);
     } catch (err) {
       setCartCount(0);
     }
   };
 
-  getCartCount();
+  fetchCart();
 }, []);
 
-
-  // for cart instant update 
-  useEffect(() => {
+// Instant cart count update on "cart-updated" event
+useEffect(() => {
   const handler = () => {
-    ordersService.getAddToCartData().then(res => {
+    ordersService.getAddToCartData().then((res) => {
       if (Array.isArray(res.data)) {
-        setCartCount(res.data.length);
+        setCartCount(calculateCartCount(res.data));
+      } else {
+        setCartCount(0);
       }
     });
   };
