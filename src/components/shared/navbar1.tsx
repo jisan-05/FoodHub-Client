@@ -25,8 +25,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { authClient } from "@/lib/auth-client";
+import { ordersService } from "@/services/orders.service";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Cart from "../ui/cart";
 import ProfileMenu from "../ui/profileMenu";
 
 interface MenuItem {
@@ -89,6 +91,49 @@ const Navbar1 = ({
 }: Navbar1Props) => {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const getCartCount = async () => {
+      try {
+        const res = await ordersService.getAddToCartData();
+
+        if (res?.data?.success === false) {
+          setCartCount(0);
+          return;
+        }
+
+        // If backend returns array of orders
+        const orders = res.data;
+
+        // Example 1: number of orders
+        setCartCount(orders.length);
+
+        // Example 2 (optional): sum of quantities
+        // const totalQty = orders.reduce((sum, o) => sum + o.quantity, 0);
+        // setCartCount(totalQty);
+      } catch (err) {
+        setCartCount(0);
+      }
+    };
+
+    getCartCount();
+  }, []);
+
+  // for cart instant update 
+  useEffect(() => {
+  const handler = () => {
+    ordersService.getAddToCartData().then(res => {
+      if (Array.isArray(res.data)) {
+        setCartCount(res.data.length);
+      }
+    });
+  };
+
+  window.addEventListener("cart-updated", handler);
+  return () => window.removeEventListener("cart-updated", handler);
+}, []);
+
 
   useEffect(() => {
     const getSession = async () => {
@@ -99,20 +144,28 @@ const Navbar1 = ({
 
     getSession();
   }, []);
-  
+
+  // const data = await ordersService.getAddToCartData()
+  // console.log("From Navbar",data)
+
   return (
-    <section className={cn("py-4", className)}>
-      <div className="container mx-auto px-2">
+    <section
+      className={cn(
+        "py-4 fixed top-0 left-0 w-full z-50 bg-white shadow",
+        className,
+      )}
+    >
+      <div className="container mx-auto px-2 ">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-6">
             {/* Logo */}
             <Link href={logo.url} className="flex items-center gap-2">
               {/* <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              /> */}
+                  src={logo.src}
+                  className="max-h-8 dark:invert"
+                  alt={logo.alt}
+                /> */}
               <span className="text-lg font-semibold tracking-tighter">
                 {logo.title}
               </span>
@@ -125,25 +178,30 @@ const Navbar1 = ({
               </NavigationMenu>
             </div>
           </div>
-        <div className="flex gap-2">
-  {!loading && session.data ? (
-    <ProfileMenu
-      name={session.data?.user.name}
-      email={session.data?.user.email}
-      image={session.data.user.image}
-      // image="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80"
-    />
-  ) : (
-    <>
-      <Button asChild variant="outline" size="sm">
-        <Link href={auth.login.url}>{auth.login.title}</Link>
-      </Button>
-      <Button asChild size="sm">
-        <Link href={auth.signup.url}>{auth.signup.title}</Link>
-      </Button>
-    </>
-  )}
-</div>
+          <div className="flex gap-5 justify-center">
+            <div className="h-full mt-2 mx-auto">
+              <Link href="/cart">
+                <Cart count={cartCount} />
+              </Link>
+            </div>
+            {!loading && session.data ? (
+              <ProfileMenu
+                name={session.data?.user.name}
+                email={session.data?.user.email}
+                image={session.data.user.image}
+                // image="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80"
+              />
+            ) : (
+              <>
+                <Button asChild variant="outline" size="sm">
+                  <Link href={auth.login.url}>{auth.login.title}</Link>
+                </Button>
+                <Button asChild size="sm">
+                  <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                </Button>
+              </>
+            )}
+          </div>
         </nav>
 
         {/* Mobile Menu */}
@@ -153,10 +211,10 @@ const Navbar1 = ({
             <a href={logo.url} className="flex items-center gap-2">
               <p className="text-2xl font-semibold text-red-700">FoodHub</p>
               {/* <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              /> */}
+                  src={logo.src}
+                  className="max-h-8 dark:invert"
+                  alt={logo.alt}
+                /> */}
             </a>
             <Sheet>
               <SheetTrigger asChild>
@@ -168,12 +226,12 @@ const Navbar1 = ({
                 <SheetHeader>
                   <SheetTitle>
                     {/* <a href={logo.url} className="flex items-center gap-2">
-                      <img
-                        src={logo.src}
-                        className="max-h-8 dark:invert"
-                        alt={logo.alt}
-                      />
-                    </a> */}
+                        <img
+                          src={logo.src}
+                          className="max-h-8 dark:invert"
+                          alt={logo.alt}
+                        />
+                      </a> */}
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">

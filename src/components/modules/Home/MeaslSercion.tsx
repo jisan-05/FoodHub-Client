@@ -42,7 +42,7 @@ const MealsSection = async () => {
                 </p>
 
                 <button className="w-full bg-yellow-500 text-gray-900 font-semibold py-2 rounded-xl hover:bg-yellow-400 transition shadow-md">
-                  Order Now
+                  Add To Cart
                 </button>
               </div>
             </div>

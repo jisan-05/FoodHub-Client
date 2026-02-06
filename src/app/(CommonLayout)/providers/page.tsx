@@ -2,6 +2,7 @@
 
 import { providerService } from "@/services/provider.service";
 import Image from "next/image";
+import Link from "next/link";
 
 type Provider = {
   id: string;
@@ -69,7 +70,7 @@ const ProviderPage = async () => {
                 </span>
 
                 <button className="px-5 py-2 rounded-full bg-orange-500 text-white text-sm font-medium hover:bg-orange-600 transition">
-                  View Menu
+                  <Link href={`/provider-menu/${provider.id}`}>View Menu</Link>
                 </button>
               </div>
             </div>
