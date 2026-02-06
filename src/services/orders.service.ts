@@ -33,4 +33,27 @@ export const ordersService = {
       return { data: null, error: { message: "Something went wrong" } };
     }
   },
+
+
+   checkoutOrder: async (payload: { orderId: string; address: string }) => {
+    try {
+      const res = await fetch(
+        `${API_URL}/api/customer/orders/checkout`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const data = await res.json();
+      return { data, error: null };
+    } catch (error) {
+      return { data: null, error: { message: "Checkout failed" } };
+    }
+  },
+
 };

@@ -13,7 +13,7 @@ type ProfileMenuProps = {
 export default function ProfileMenu({
   name = "Jisan",
   email = "jisan@gmail.com",
-  image = "https://i.pravatar.cc/150?img=3",
+  image,
   onLogout,
 }: ProfileMenuProps) {
   const [open, setOpen] = useState(false);
@@ -26,12 +26,10 @@ export default function ProfileMenu({
         setOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Async logout function
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
@@ -42,6 +40,13 @@ export default function ProfileMenu({
     }
   };
 
+  // Fallback image
+  const fallbackImage = "https://wallpapers.com/images/featured/tanjiro-pfp-z6l8jytjn2iv25an.jpg";
+
+  // ✅ Ensure we never pass empty src to <img>
+  const imageSrc =
+    typeof image === "string" && image.trim() !== "" ? image : fallbackImage;
+
   return (
     <div className="relative" ref={menuRef}>
       {/* Profile Image Button */}
@@ -49,10 +54,18 @@ export default function ProfileMenu({
         onClick={() => setOpen(!open)}
         className="rounded-full border border-gray-300 bg-white p-1 shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-yellow-500"
       >
+        {/* Use fallback if invalid */}
         <img
-          src={image}
+          src={imageSrc}
           alt="profile"
           className="h-10 w-10 rounded-full object-cover"
+          onError={(e) => {
+            // If image fails to load, replace with fallback
+            (e.currentTarget as HTMLImageElement).src = fallbackImage;
+            console.error(
+              `Failed to load profile image: "${image}". Using fallback.`
+            );
+          }}
         />
       </button>
 

@@ -93,32 +93,36 @@ const Navbar1 = ({
   const [loading, setLoading] = useState(true);
   const [cartCount, setCartCount] = useState(0);
 
-  useEffect(() => {
-    const getCartCount = async () => {
-      try {
-        const res = await ordersService.getAddToCartData();
+ useEffect(() => {
+  const getCartCount = async () => {
+    try {
+      const res = await ordersService.getAddToCartData();
 
-        if (res?.data?.success === false) {
-          setCartCount(0);
-          return;
-        }
-
-        // If backend returns array of orders
-        const orders = res.data;
-
-        // Example 1: number of orders
-        setCartCount(orders.length);
-
-        // Example 2 (optional): sum of quantities
-        // const totalQty = orders.reduce((sum, o) => sum + o.quantity, 0);
-        // setCartCount(totalQty);
-      } catch (err) {
+      if (!res?.data || res?.data?.length === 0) {
         setCartCount(0);
+        return;
       }
-    };
 
-    getCartCount();
-  }, []);
+      const orders = res.data;
+
+      // Sum all orderItems quantities across all orders
+      const totalQty = orders.reduce((sum: number, order: any) => {
+        const orderItemQty = order.orderItems?.reduce(
+          (itemSum: number, item: any) => itemSum + item.quantity,
+          0
+        );
+        return sum + orderItemQty;
+      }, 0);
+
+      setCartCount(totalQty);
+    } catch (err) {
+      setCartCount(0);
+    }
+  };
+
+  getCartCount();
+}, []);
+
 
   // for cart instant update 
   useEffect(() => {
