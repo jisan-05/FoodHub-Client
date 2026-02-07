@@ -9,8 +9,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         <h1 className="text-2xl font-bold mb-6"><Link href="/">FoodHub</Link></h1>
         <nav className="flex flex-col gap-4">
           <a href="/dashboard" className="text-gray-700 font-medium hover:text-blue-500">Dashboard</a>
-          <a href="/cart" className="text-gray-700 font-medium hover:text-blue-500">My Cart</a>
-          <a href="/dashboard/my-orders" className="text-gray-700 font-medium hover:text-blue-500">My Orders</a>
+          <a href="/dashboard/create-provider-profile" className="text-gray-700 font-medium hover:text-blue-500">create-provider-profile</a>
+          <a href="/dashboard/add-menu-items" className="text-gray-700 font-medium hover:text-blue-500">Add Menu Items</a>
+          <a href="/dashboard/orders" className="text-gray-700 font-medium hover:text-blue-500">Orders</a>
           <a href="/profile" className="text-gray-700 font-medium hover:text-blue-500">Profile</a>
         </nav>
       </aside>

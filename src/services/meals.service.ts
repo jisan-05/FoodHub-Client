@@ -11,16 +11,20 @@ export const mealsService = {
     } catch (error) {}
     return { data: null, error: { message: "Something wrong " } };
   },
-  getMealsByProvider: async function ({id}:{id:string}) {
-    // console.log("from provider page",id)
-    try {
-      const res = await fetch(`${API_URL}/api/meals/${id}`);
-      const data = await res.json();
-      console.log("from get provider -----", data);
-      return { data: data, error: null };
-    } catch (error) {}
-    return { data: null, error: { message: "Something wrong " } };
-  },
+getMealsByProvider: async function ({ id }: { id: string }) {
+  try {
+    // Correct backend route
+    const res = await fetch(`${API_URL}/api/meals/provider/${id}`);
+    if (!res.ok) throw new Error("Failed to fetch meals for this provider");
+    const data = await res.json();
+    console.log("Meals for provider -----", data);
+    return { data, error: null };
+  } catch (error: any) {
+    return { data: null, error: { message: error.message || "Something went wrong" } };
+  }
+}
+
+,
   // services/meals.service.ts
 
   async getMealById(id: string) {

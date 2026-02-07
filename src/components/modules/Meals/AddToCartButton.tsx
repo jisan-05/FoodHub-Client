@@ -18,7 +18,7 @@ export default function AddToCartButton({ mealId, providerId }: Props) {
     setLoading(true);
     try {
       const cartData = { mealId, providerId, quantity };
-      await ordersService.addToCart(cartData);
+      await ordersService.addToCart(cartData as any);
       console.log('Cart added:', cartData);
       window.dispatchEvent(new Event('cart-updated'));
       alert('Meal added to cart!'); // simple confirmation

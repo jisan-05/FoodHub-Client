@@ -3,7 +3,7 @@ import React from 'react';
 const ProviderDashboard = () => {
     return (
         <div>
-            Provider Dashboard
+            provider order show 
         </div>
     );
 };

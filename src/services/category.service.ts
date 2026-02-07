@@ -1,5 +1,4 @@
-const API_URL = process.env.API_URL; // e.g., "http://localhost:5000"
-console.log("API_URL=", API_URL);
+const API_URL = process.env.NEXT_PUBLIC_API_URL; // Use NEXT_PUBLIC_API_URL
 
 export const categoryService = {
   getCategorys: async function () {
@@ -8,7 +7,9 @@ export const categoryService = {
       const data = await res.json();
       console.log("from category service -----", data);
       return { data: data, error: null };
-    } catch (error) {}
-    return { data: null, error: { message: "Something wrong " } };
+    } catch (error) {
+      console.error(error);
+      return { data: null, error: { message: "Something went wrong" } };
+    }
   },
 };
