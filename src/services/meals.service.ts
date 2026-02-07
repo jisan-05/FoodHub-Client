@@ -21,6 +21,24 @@ export const mealsService = {
     } catch (error) {}
     return { data: null, error: { message: "Something wrong " } };
   },
+  // services/meals.service.ts
+
+  async getMealById(id: string) {
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/meals/${id}`,
+        { cache: "no-store" }
+      );
+
+      const data = await res.json();
+
+      return { data };
+    } catch (error: any) {
+      return { error };
+    }
+  },
+
+
 };
 
 

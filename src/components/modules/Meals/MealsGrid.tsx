@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { ordersService } from '@/services/orders.service';
+import Link from 'next/link';
 
 const MealsGrid = ({ meals }: { meals: any[] }) => {
   const handleAddToCart = async (meal: any) => {
@@ -36,9 +37,9 @@ const MealsGrid = ({ meals }: { meals: any[] }) => {
             <p className="mt-3 font-bold text-green-600">৳ {meal.price}</p>
 
             <div className="w-full flex justify-end mt-4">
-              <Button onClick={() => handleAddToCart(meal)}>
-                Add To Cart
-              </Button>
+             <Link href={`/meals/${meal.id}`}> <Button >
+                see meal Details
+              </Button></Link>
             </div>
           </div>
         </div>

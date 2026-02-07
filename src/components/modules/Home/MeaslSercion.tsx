@@ -1,5 +1,6 @@
 import { mealsService } from '@/services/meals.service';
 import { providerService } from '@/services/provider.service';
+import Link from 'next/link';
 import React from 'react';
 
 const MealsSection = async () => {
@@ -42,7 +43,7 @@ const MealsSection = async () => {
                 </p>
 
                 <button className="w-full bg-yellow-500 text-gray-900 font-semibold py-2 rounded-xl hover:bg-yellow-400 transition shadow-md">
-                  Add To Cart
+                  <Link href={`/meals/${meal.id}`}>See Meals Details</Link>
                 </button>
               </div>
             </div>
