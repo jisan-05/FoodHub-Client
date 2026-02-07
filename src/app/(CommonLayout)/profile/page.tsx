@@ -1,10 +1,13 @@
 import { userService } from "@/services/user.service";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
+
 const ProfilePage = async () => {
   const user = await userService.getSession();
   const userInfo = user.data.user;
-  // console.log(userInfo);
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">

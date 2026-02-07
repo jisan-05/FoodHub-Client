@@ -2,16 +2,17 @@ import MealsGrid from '@/components/modules/Meals/MealsGrid';
 import { mealsService } from '@/services/meals.service';
 import { ordersService } from '@/services/orders.service';
 
+export const dynamic = "force-dynamic";
+
 
 const MealsPage = async () => {
   const { data: meals, error } = await mealsService.getMeals();
 
-  if (error) {
-    return <div className="text-red-500">Failed to load meals: {error}</div>;
+  if (error ) {
+    return <div className="text-red-500">Failed to load meals: {error as any}</div>;
   }
 
   const data = await ordersService.getAddToCartData()
-    console.log("From meals",data)
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">

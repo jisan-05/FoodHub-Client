@@ -13,7 +13,7 @@ const MealsGrid = ({ meals }: { meals: any[] }) => {
     };
 
     const res = await ordersService.addToCart(cartData);
-    console.log('Cart added:', res);
+
     window.dispatchEvent(new Event("cart-updated"));
 
   };

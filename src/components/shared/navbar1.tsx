@@ -150,8 +150,8 @@ useEffect(() => {
   }, []);
 
   // const data = await ordersService.getAddToCartData()
-  // console.log("From Navbar",data)
 
+  
   return (
     <section
       className={cn(

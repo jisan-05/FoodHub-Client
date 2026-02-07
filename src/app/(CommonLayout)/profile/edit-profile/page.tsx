@@ -2,6 +2,9 @@ import { userService } from "@/services/user.service";
 import EditProfileForm from "./EditProfileForm";
  // client component
 
+ export const dynamic = "force-dynamic";
+
+
 const EditProfilePage = async () => {
   const session = await userService.getSession();
   const user = session.data?.user;

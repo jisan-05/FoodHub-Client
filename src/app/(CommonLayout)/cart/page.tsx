@@ -13,6 +13,7 @@ interface Meal {
 
 interface CartItem {
   id: string;
+  orderId: string;
   meal: Meal;
   quantity: number;
   price: number;
@@ -29,8 +30,6 @@ const CartPage = () => {
       setLoading(true);
       const { data, error } = await ordersService.getAddToCartData();
 
-                // console.log("from cart count", data);
-
 
       if (error) {
         alert(error.message);
@@ -44,6 +43,7 @@ const CartPage = () => {
         data.forEach((order: any) => {
           order.orderItemForCarts.forEach((item: any) => {
             const mealId = item.meal.id;
+
             if (map.has(mealId)) {
               const existing = map.get(mealId)!;
               existing.quantity += item.quantity;
@@ -51,6 +51,7 @@ const CartPage = () => {
             } else {
               map.set(mealId, {
                 id: mealId,
+                orderId: order.id, // ✅ IMPORTANT
                 meal: item.meal,
                 quantity: item.quantity,
                 price: item.meal.price * item.quantity,
@@ -71,24 +72,32 @@ const CartPage = () => {
   const subtotal = cartItems.reduce((t, i) => t + i.price, 0);
 
   const increaseQty = (mealId: string) => {
-    setCartItems(prev =>
-      prev.map(item =>
+    setCartItems((prev) =>
+      prev.map((item) =>
         item.id === mealId
-          ? { ...item, quantity: item.quantity + 1, price: (item.quantity + 1) * item.meal.price }
-          : item
-      )
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+              price: (item.quantity + 1) * item.meal.price,
+            }
+          : item,
+      ),
     );
   };
 
   const decreaseQty = (mealId: string) => {
-    setCartItems(prev =>
+    setCartItems((prev) =>
       prev
-        .map(item =>
+        .map((item) =>
           item.id === mealId
-            ? { ...item, quantity: item.quantity - 1, price: (item.quantity - 1) * item.meal.price }
-            : item
+            ? {
+                ...item,
+                quantity: item.quantity - 1,
+                price: (item.quantity - 1) * item.meal.price,
+              }
+            : item,
         )
-        .filter(item => item.quantity > 0)
+        .filter((item) => item.quantity > 0),
     );
   };
 
@@ -98,9 +107,18 @@ const CartPage = () => {
       return;
     }
 
+    const orderId = cartItems[0]?.orderId;
+    if (!orderId) {
+      alert("Order not found");
+      return;
+    }
+
     setCheckoutLoading(true);
 
-    const { error } = await ordersService.checkoutOrder({ address });
+    const { error } = await ordersService.checkoutOrder({
+      orderId,
+      address,
+    });
 
     setCheckoutLoading(false);
 
@@ -114,23 +132,40 @@ const CartPage = () => {
   };
 
   if (loading) return <p className="text-center mt-20">Loading cart...</p>;
-  if (cartItems.length === 0) return  <CartEmpty />;
+  if (cartItems.length === 0) return <CartEmpty />;
 
   return (
     <div className="max-w-5xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
 
-      {cartItems.map(item => (
-        <div key={item.id} className="flex justify-between items-center border-b py-3">
+      {cartItems.map((item) => (
+        <div
+          key={item.id}
+          className="flex justify-between items-center border-b py-3"
+        >
           <div className="flex items-center gap-4">
-            <img src={item.meal.image} alt={item.meal.name} className="w-20 h-20 object-cover rounded" />
+            <img
+              src={item.meal.image}
+              alt={item.meal.name}
+              className="w-20 h-20 object-cover rounded"
+            />
             <div>
               <p className="font-medium">{item.meal.name}</p>
               <p className="text-gray-500">${item.meal.price}</p>
               <div className="flex items-center gap-2 mt-1">
-                <button onClick={() => decreaseQty(item.id)} className="bg-gray-200 px-2 rounded">-</button>
+                <button
+                  onClick={() => decreaseQty(item.id)}
+                  className="bg-gray-200 px-2 rounded"
+                >
+                  -
+                </button>
                 <span>{item.quantity}</span>
-                <button onClick={() => increaseQty(item.id)} className="bg-gray-200 px-2 rounded">+</button>
+                <button
+                  onClick={() => increaseQty(item.id)}
+                  className="bg-gray-200 px-2 rounded"
+                >
+                  +
+                </button>
               </div>
             </div>
           </div>
@@ -142,7 +177,7 @@ const CartPage = () => {
         <p className="text-lg font-semibold">Subtotal: ${subtotal}</p>
         <input
           value={address}
-          onChange={e => setAddress(e.target.value)}
+          onChange={(e) => setAddress(e.target.value)}
           placeholder="Delivery Address"
           className="w-full border px-3 py-2 mt-3 rounded"
         />

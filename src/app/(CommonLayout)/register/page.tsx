@@ -6,7 +6,6 @@ const RegisterPage = async() => {
 
     const session = await authClient.getSession()
 
-    console.log(session)
 
   return (
     <div>

@@ -9,10 +9,8 @@ import { providerService } from "@/services/provider.service";
 
 export default async function Home() {
   const categories = await categoryService.getCategorys();
-  // console.log(categories);
       const providers = await providerService.getProvider()
 
-      // console.log(providers)
   return (
     <div className="w-full ">
       {/* Banner Slider */}

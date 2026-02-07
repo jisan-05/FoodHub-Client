@@ -20,7 +20,6 @@ const MealsDetailsPage = async ({
 }) => {
   const { id } = await params; // ✅ now id works
 
-  console.log("from params id", id);
 
   const mealResponse = await mealsService.getMealById(id);
   const meal: Meal | null = mealResponse?.data ?? null;

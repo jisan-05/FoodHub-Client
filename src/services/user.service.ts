@@ -2,6 +2,9 @@ import { cookies } from "next/headers";
 
 const AUTH_URL = process.env.AUTH_URL;
 
+export const dynamic = 'force-dynamic';
+
+
 export const userService = {
   getSession: async function () {
     try {

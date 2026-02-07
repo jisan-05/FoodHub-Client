@@ -307,27 +307,26 @@ const ProviderDashboard = () => {
               </div>
 
               {/* Status Update */}
-             <div className="flex items-center gap-4">
-  <label className="font-medium text-xl">Status:</label>
-  <select
-    value={order.status}
-    onChange={(e) => handleStatusChange(order.id, e.target.value)}
-    className={`border-2 rounded px-3 py-1 font-semibold 
+              <div className="flex items-center gap-4">
+                <label className="font-medium text-xl">Status:</label>
+                <select
+                  value={order.status}
+                  onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                  className={`border-2 rounded px-3 py-1 font-semibold 
       ${order.status === "PLACED" ? "border-blue-500 text-blue-600" : ""}
       ${order.status === "PREPARING" ? "border-yellow-500 text-yellow-600" : ""}
       ${order.status === "READY" ? "border-green-500 text-green-600" : ""}
       ${order.status === "DELIVERED" ? "border-purple-500 text-purple-600" : ""}
       ${order.status === "CANCELLED" ? "border-red-500 text-red-600" : ""}
     `}
-  >
-    <option value="PLACED">PLACED</option>
-    <option value="PREPARING">PREPARING</option>
-    <option value="READY">READY</option>
-    <option value="DELIVERED">DELIVERED</option>
-    <option value="CANCELLED">CANCELLED</option>
-  </select>
-</div>
-
+                >
+                  <option value="PLACED">PLACED</option>
+                  <option value="PREPARING">PREPARING</option>
+                  <option value="READY">READY</option>
+                  <option value="DELIVERED">DELIVERED</option>
+                  <option value="CANCELLED">CANCELLED</option>
+                </select>
+              </div>
             </div>
           ))}
         </div>

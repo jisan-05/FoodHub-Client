@@ -5,7 +5,7 @@ import React from 'react';
 
 const MealsSection = async () => {
   const { data } = await mealsService.getMeals()
-  console.log("from meal ----",data)
+
   return (
     <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">

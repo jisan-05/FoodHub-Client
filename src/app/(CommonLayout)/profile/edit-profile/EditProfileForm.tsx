@@ -12,6 +12,9 @@ type Props = {
   user: User;
 };
 
+export const dynamic = "force-dynamic";
+
+
 const EditProfileForm = ({ user }: Props) => {
   const [formData, setFormData] = useState({
     name: user.name || "",
@@ -47,7 +50,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     if (!res.ok) throw new Error("Failed to update profile");
 
     const data = await res.json();
-    console.log("Updated profile:", data);
     setMessage("Profile updated successfully!");
 
     // ✅ Reload the page after 1 second to show updated profile

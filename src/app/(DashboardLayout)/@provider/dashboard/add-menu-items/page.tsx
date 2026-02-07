@@ -5,8 +5,14 @@ import { categoryService } from "@/services/category.service";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
+interface Category {
+  id: string;
+  name: string;
+}
+
+
 const AddMenuItemPage = () => {
-  const [categories, setCategories] = useState([]);
+const [categories, setCategories] = useState<Category[]>([]);
   const [formData, setFormData] = useState({
     categoryId: "",
     name: "",
@@ -15,8 +21,8 @@ const AddMenuItemPage = () => {
     price: "",
     providerId: "17bb4d09-e4b6-42a9-b6e0-c4619bd6b73a",
   });
-  console.log("Sending formData:", formData);
 
+  
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -25,7 +31,7 @@ const AddMenuItemPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       const { data, error } = await categoryService.getCategorys();
-      console.log("from cateogry data ------", data);
+
       if (data) setCategories(data);
       if (error) setErrorMsg(error.message);
     };
@@ -51,8 +57,8 @@ const AddMenuItemPage = () => {
         price: Number(formData.price),
       };
 
-      console.log("Sending payload:", payload);
 
+      
       const res = await fetch(`${API_URL}/api/meals`, {
         method: "POST",
         headers: {
