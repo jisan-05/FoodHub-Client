@@ -29,8 +29,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [role, setRole] = useState<UserRole>("CUSTOMER");
   const [loading, setLoading] = useState(false);
 
-
-
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -42,10 +40,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         name,
         email,
         password,
-        role,   // PROVIDER | CUSTOMER
-        image,  // image URL
-        // callbackURL: "/", // redirect after signup
-      }as any);
+        role,
+        image,
+      } as any);
 
       if (error) {
         toast.error(error.message, { id: toastId });
@@ -54,7 +51,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
       toast.success("Account created successfully 🎉", { id: toastId });
       window.location.href = "/";
-
     } catch (err) {
       toast.error("Something went wrong", { id: toastId });
     } finally {
@@ -78,16 +74,40 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         </CardDescription>
       </CardHeader>
 
+      {/* Role Tabs */}
+      <div className="flex justify-center mt-4 mb-6">
+        <button
+          className={`px-6 py-2 rounded-t-lg font-semibold transition-colors ${
+            role === "CUSTOMER"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-700"
+          }`}
+          onClick={() => setRole("CUSTOMER")}
+        >
+          Customer
+        </button>
+        <button
+          className={`px-6 py-2 rounded-t-lg font-semibold transition-colors ${
+            role === "PROVIDER"
+              ? "bg-green-600 text-white"
+              : "bg-gray-200 text-gray-700"
+          }`}
+          onClick={() => setRole("PROVIDER")}
+        >
+          Provider
+        </button>
+      </div>
+
       <CardContent>
         <form onSubmit={handleSignup}>
           <FieldGroup>
             {/* Full Name */}
             <Field>
-              <FieldLabel htmlFor="name">Full Name</FieldLabel>
+              <FieldLabel htmlFor="name">{role === "PROVIDER" ? "Provider/Restaurent Name" : "Your Name" } </FieldLabel>
               <Input
                 id="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder={role === "PROVIDER" ? "Pizza shop 365" : "John Dou" }
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -106,7 +126,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 required
               />
               <FieldDescription>
-                We&apos;ll use this to contact you.
+                We'll use this to contact you.
               </FieldDescription>
             </Field>
 
@@ -120,27 +140,19 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               />
-              <FieldDescription>
-                Optional: link to your profile image.
-              </FieldDescription>
+              <FieldDescription>Optional: link to your profile image.</FieldDescription>
             </Field>
 
-            {/* Role */}
-            <Field>
-              <FieldLabel htmlFor="role">Account Type</FieldLabel>
-              <select
-                id="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value as UserRole)}
-                className="w-full rounded-md border px-3 py-2"
-              >
-                <option value="CUSTOMER">Customer</option>
-                <option value="PROVIDER">Provider</option>
-              </select>
-              <FieldDescription>
-                Choose how you want to use the platform.
-              </FieldDescription>
-            </Field>
+            {/* Provider-specific field */}
+            {role === "PROVIDER" && (
+              <Field>
+                <FieldLabel htmlFor="businessName"></FieldLabel>
+                
+                <FieldDescription>
+                  
+                </FieldDescription>
+              </Field>
+            )}
 
             {/* Password */}
             <Field>
@@ -152,9 +164,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <FieldDescription>
-                Must be at least 8 characters long.
-              </FieldDescription>
+              <FieldDescription>Must be at least 8 characters long.</FieldDescription>
             </Field>
 
             {/* Actions */}
@@ -163,11 +173,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                 {loading ? "Creating account..." : "Create Account"}
               </Button>
 
-              <Button
-                onClick={handleGoogleSignup}
-                variant="outline"
-                type="button"
-              >
+              <Button onClick={handleGoogleSignup} variant="outline" type="button">
                 Sign up with Google
               </Button>
 

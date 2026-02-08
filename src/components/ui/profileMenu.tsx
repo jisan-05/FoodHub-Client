@@ -62,9 +62,9 @@ export default function ProfileMenu({
           onError={(e) => {
             // If image fails to load, replace with fallback
             (e.currentTarget as HTMLImageElement).src = fallbackImage;
-            console.error(
-              `Failed to load profile image: "${image}". Using fallback.`
-            );
+            // console.error(
+            //   `Failed to load profile image: "${image}". Using fallback.`
+            // );
           }}
         />
       </button>

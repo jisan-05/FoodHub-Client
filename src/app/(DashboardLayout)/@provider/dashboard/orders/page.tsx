@@ -109,11 +109,11 @@ const ProviderDashboard = () => {
           {orders.map((order) => (
             <div
               key={order.id}
-              className="bg-gray-800 p-4 rounded-lg border-4 border-gray-900 shadow-lg"
+              className="bg-blue-200 p-4 rounded-lg border-4 border-gray-300 shadow-lg"
             >
               {/* Customer Info */}
               {/* Customer Info - Modern Design */}
-              <div className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 rounded-2xl p-6 mb-6  border-2 border-gray-400 dark:border-gray-700 backdrop-blur-sm">
+              <div className="bg-gradient-to-br from-blue-200 to-white dark:from-gray-900 dark:to-gray-800 rounded-2xl p-6 mb-6  border-2 border-gray-400 dark:border-gray-700 backdrop-blur-sm">
                 <div className="flex items-start gap-5">
                   {/* Avatar with subtle glow */}
                   <div className="relative">

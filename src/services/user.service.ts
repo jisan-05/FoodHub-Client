@@ -1,5 +1,8 @@
 import { cookies } from "next/headers";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL; // e.g., "http://localhost:5000"
+
+
 const AUTH_URL = process.env.AUTH_URL;
 
 export const dynamic = 'force-dynamic';
@@ -28,4 +31,30 @@ export const userService = {
       return {data:null,error:{message:"Something went wrong"}}
     }
   },
+  getAllUser:async function () {
+     try {
+      const res = await fetch(`${API_URL}/users`);
+      const data = await res.json();
+
+      return { data: data, error: null };
+    } catch (error) {}
+    return { data: null, error: { message: "Something wrong " } };
+  },
+  updateUserStatus:async function (payload:any) {
+   const res = await fetch(`${API_URL}/users`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        
+      },
+      credentials:"include",
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update meal");
+    }
+
+    return res.json();
+  }
 };

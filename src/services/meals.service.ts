@@ -1,4 +1,4 @@
-const API_URL = process.env.API_URL; // e.g., "http://localhost:5000"
+const API_URL = process.env.NEXT_PUBLIC_API_URL; // e.g., "http://localhost:5000"
 
 
 export const mealsService = {
@@ -41,6 +41,44 @@ getMealsByProvider: async function ({ id }: { id: string }) {
       return { error };
     }
   },
+
+   async updateMeal(mealId: string, payload: any, token: string) {
+    const res = await fetch(`${API_URL}/api/meals/${mealId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        
+      },
+      credentials:"include",
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update meal");
+    }
+
+    return res.json();
+  },
+
+
+
+
+  async deleteMeal(mealId: string, token: string) {
+    const res = await fetch(`${API_URL}/api/meals/${mealId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: token, // auth() middleware
+      },
+      credentials:"include"
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to delete meal");
+    }
+
+    return res.json();
+  },
+
 
 
 };
