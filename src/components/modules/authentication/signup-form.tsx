@@ -21,6 +21,9 @@ import { toast } from "sonner";
 
 type UserRole = "PROVIDER" | "CUSTOMER";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,34 +32,64 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [role, setRole] = useState<UserRole>("CUSTOMER");
   const [loading, setLoading] = useState(false);
 
-  const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSignup = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    const toastId = toast.loading("Creating account...");
-    setLoading(true);
+  const toastId = toast.loading("Creating account...");
+  setLoading(true);
 
-    try {
-      const { data, error } = await authClient.signUp.email({
-        name,
-        email,
-        password,
-        role,
-        image,
-      } as any);
+  try {
+    // 1️⃣ Sign up the user
+    const { data, error } = await authClient.signUp.email({
+      name,
+      email,
+      password,
+      role,
+      image,
+    } as any);
 
-      if (error) {
-        toast.error(error.message, { id: toastId });
-        return;
-      }
-
-      toast.success("Account created successfully 🎉", { id: toastId });
-      window.location.href = "/";
-    } catch (err) {
-      toast.error("Something went wrong", { id: toastId });
-    } finally {
-      setLoading(false);
+    if (error) {
+      toast.error(error.message, { id: toastId });
+      return;
     }
-  };
+
+    toast.success("Account created successfully 🎉", { id: toastId });
+
+    // 2️⃣ If role is PROVIDER, create provider profile automatically
+    if (role === "PROVIDER") {
+      try {
+        const profileRes = await fetch(`${API_URL}/api/provider/profile`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            restaurantName: name, // default name from signup
+            address: "",
+            description: "",
+            image: image || "",
+          }),
+        });
+
+        if (!profileRes.ok) {
+          const errData = await profileRes.json();
+          throw new Error(errData.message || "Failed to create provider profile");
+        }
+
+        toast.success("Provider profile created successfully 🎉", { id: toastId });
+      } catch (err: any) {
+        toast.error("Provider profile creation failed: " + err.message, { id: toastId });
+      }
+    }
+
+    // Redirect after signup
+    window.location.href = "/";
+
+  } catch (err) {
+    toast.error("Something went wrong", { id: toastId });
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleGoogleSignup = async () => {
     await authClient.signIn.social({

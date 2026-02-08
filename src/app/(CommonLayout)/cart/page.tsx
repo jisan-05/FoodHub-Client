@@ -1,5 +1,9 @@
 "use client";
 
+
+
+
+
 import CartEmpty from "@/components/ui/CartEmpty";
 import { ordersService } from "@/services/orders.service";
 import { useEffect, useState } from "react";
@@ -18,6 +22,8 @@ interface CartItem {
   quantity: number;
   price: number;
 }
+
+export const dynamic = "force-dynamic";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);

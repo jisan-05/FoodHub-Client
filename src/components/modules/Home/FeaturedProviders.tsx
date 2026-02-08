@@ -10,7 +10,7 @@ const FeaturedProviders = async () => {
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-          Featured Restaurants
+          Featured Provider
         </h2>
 
         {/* Providers Grid */}
