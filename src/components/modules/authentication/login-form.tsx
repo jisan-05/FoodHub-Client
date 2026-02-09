@@ -21,6 +21,8 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 export function LoginForm({
   className,
   ...props
@@ -42,7 +44,7 @@ export function LoginForm({
       const { data, error } = await authClient.signIn.email({
         email,
         password,
-        callbackURL: "/",
+        // callbackURL: "/",
       });
 
       if (error) {
@@ -64,7 +66,7 @@ export function LoginForm({
   const handleGoogleLogin = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:3000",
+      callbackURL: `${API_URL}`,
     });
   };
 

@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL; // e.g., "http://localhost:5000"
+const API_URL = process.env.NEXT_PUBLIC_API_URL; 
 
 
 const AUTH_URL = process.env.AUTH_URL;

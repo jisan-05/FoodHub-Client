@@ -12,6 +12,8 @@ interface ReviewPayload {
   rating: number;
   comment: string;
 }
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 
 const MyOrders = () => {
   const [orders, setOrders] = useState<any[]>([]);
@@ -38,7 +40,7 @@ const MyOrders = () => {
 
 const handleSubmitReview = async (payload: ReviewPayload) => {
   try {
-    const resGet = await fetch("http://localhost:5000/api/customer/reviews", {
+    const resGet = await fetch(`${API_URL}/api/customer/reviews`, {
       method: "GET",
       credentials: "include",
     });
@@ -59,7 +61,7 @@ const handleSubmitReview = async (payload: ReviewPayload) => {
     }
 
     const resPost = await fetch(
-      "http://localhost:5000/api/customer/reviews",
+      `${API_URL}/api/customer/reviews`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

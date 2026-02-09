@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL; // e.g., "http://localhost:5000"
+const API_URL = process.env.NEXT_PUBLIC_API_URL; 
 
 
 export const mealsService = {
@@ -30,7 +30,7 @@ getMealsByProvider: async function ({ id }: { id: string }) {
   async getMealById(id: string) {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/meals/${id}`,
+        `${API_URL}/api/meals/${id}`,
         { cache: "no-store" }
       );
 

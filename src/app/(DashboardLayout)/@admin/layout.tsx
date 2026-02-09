@@ -30,6 +30,12 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             View all orders{" "}
           </a>
           <a
+            href="/dashboard/add-category"
+            className="text-gray-700 font-medium hover:text-blue-500"
+          >
+            add Category
+          </a>
+          <a
             href="/dashboard/manage-category"
             className="text-gray-700 font-medium hover:text-blue-500"
           >

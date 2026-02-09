@@ -21,7 +21,7 @@ import { toast } from "sonner";
 
 type UserRole = "PROVIDER" | "CUSTOMER";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
@@ -82,7 +82,7 @@ const handleSignup = async (e: React.FormEvent) => {
     }
 
     // Redirect after signup
-    window.location.href = "/";
+    // window.location.href = "/";
 
   } catch (err) {
     toast.error("Something went wrong", { id: toastId });
@@ -94,7 +94,7 @@ const handleSignup = async (e: React.FormEvent) => {
   const handleGoogleSignup = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:3000",
+      callbackURL: `${API_URL}`,
     });
   };
 

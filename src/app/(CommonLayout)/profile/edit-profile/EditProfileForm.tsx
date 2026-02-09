@@ -14,6 +14,8 @@ type Props = {
 
 export const dynamic = "force-dynamic";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 
 const EditProfileForm = ({ user }: Props) => {
   const [formData, setFormData] = useState({
@@ -40,7 +42,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   setMessage(null);
 
   try {
-    const res = await fetch("http://localhost:5000/api/users/me", {
+    const res = await fetch(`{${API_URL}/api/users/me`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
