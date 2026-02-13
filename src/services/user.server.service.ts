@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-const AUTH_URL = process.env.AUTH_URL;
+const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL;
 
 export const userServerService = {
   getSession: async () => {

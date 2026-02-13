@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL 
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL 
 
 type Meal = {
   id: string;

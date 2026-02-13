@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL; // Use NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL; // Use NEXT_PUBLIC_API_URL
 
 export const categoryService = {
   getCategorys: async function () {

@@ -19,9 +19,12 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 
+export const dynamic = "force-dynamic";
+
+
 type UserRole = "PROVIDER" | "CUSTOMER";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL 
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL 
 
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {

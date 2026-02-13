@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL; 
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL; 
 
 
-const AUTH_URL = process.env.AUTH_URL;
+const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL;
 
 export const dynamic = 'force-dynamic';
 
