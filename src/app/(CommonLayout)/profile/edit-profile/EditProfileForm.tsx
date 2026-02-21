@@ -42,10 +42,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   setMessage(null);
 
   try {
-    const res = await fetch(`{${API_URL}/api/users/me`, {
+    const res = await fetch(`/api/users/me/update-profile`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({ name: formData.name, image: formData.image }),
     });
 
@@ -53,8 +52,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     const data = await res.json();
     setMessage("Profile updated successfully!");
-
-    // ✅ Reload the page after 1 second to show updated profile
     setTimeout(() => window.location.reload(), 1000);
   } catch (err: any) {
     setMessage(err.message || "Something went wrong");
@@ -63,7 +60,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setLoading(false);
   }
 };
-
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">

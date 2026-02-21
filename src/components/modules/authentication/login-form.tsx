@@ -44,18 +44,18 @@ export function LoginForm({
       const { data, error } = await authClient.signIn.email({
         email,
         password,
-        // callbackURL: "/",
+        callbackURL: "/",
       });
 
       if (error) {
-        // toast.error(error.message, { id: toastId });
+        toast.error(error.message, { id: toastId });
         return;
       }
 
       toast.success("Login successful 🎉", { id: toastId });
       // optional: router.refresh() or router.push("/dashboard")
-      // router.push("/")
-      // router.refresh()
+      router.push("/")
+      router.refresh()
     } catch (err) {
       toast.error("Something went wrong", { id: toastId });
     } finally {

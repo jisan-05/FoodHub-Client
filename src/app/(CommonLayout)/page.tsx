@@ -7,6 +7,8 @@ import BannerSlider from "@/components/modules/Home/Slider";
 import { categoryService } from "@/services/category.service";
 import { providerService } from "@/services/provider.service";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const categories = await categoryService.getCategorys();
       const providers = await providerService.getProvider()

@@ -48,7 +48,7 @@ const UpdateMealForm = ({ meal }: { meal: Meal }) => {
           ...formData,
           providerId: meal.providerId,
         },
-        token || ""
+        
       );
 
       alert("Meal updated successfully ✅");

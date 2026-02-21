@@ -1,3 +1,4 @@
+
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL; 
 
 
@@ -42,29 +43,23 @@ getMealsByProvider: async function ({ id }: { id: string }) {
     }
   },
 
-   async updateMeal(mealId: string, payload: any, token: string) {
-    const res = await fetch(`${API_URL}/api/meals/${mealId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        
-      },
-      credentials:"include",
-      body: JSON.stringify(payload),
-    });
+  async updateMeal(mealId: string, payload: any) {
+  const res = await fetch(`/api/meals/update/${mealId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
 
-    if (!res.ok) {
-      throw new Error("Failed to update meal");
-    }
-
-    return res.json();
-  },
+  if (!res.ok) throw new Error("Failed to update meal");
+  return res.json();
+}
+,
 
 
 
 
   async deleteMeal(mealId: string, token: string) {
-    const res = await fetch(`${API_URL}/api/meals/${mealId}`, {
+    const res = await  fetch(`/api/meals/${mealId}`, {
       method: "DELETE",
       headers: {
         Authorization: token, // auth() middleware

@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
 
-const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL; 
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
+console.log("FROM API", API_URL);
 
 const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_URL;
 
-export const dynamic = 'force-dynamic';
-
+export const dynamic = "force-dynamic";
 
 export const userService = {
   getSession: async function () {
@@ -25,14 +25,14 @@ export const userService = {
       if (session === null) {
         return { data: null, error: { message: "session is missing" } };
       }
-      return {data:session,error:null}
+      return { data: session, error: null };
     } catch (error) {
-        console.error(error)
-      return {data:null,error:{message:"Something went wrong"}}
+      console.error(error);
+      return { data: null, error: { message: "Something went wrong" } };
     }
   },
-  getAllUser:async function () {
-     try {
+  getAllUser: async function () {
+    try {
       const res = await fetch(`${API_URL}/users`);
       const data = await res.json();
 
@@ -40,14 +40,13 @@ export const userService = {
     } catch (error) {}
     return { data: null, error: { message: "Something wrong " } };
   },
-  updateUserStatus:async function (payload:any) {
-   const res = await fetch(`${API_URL}/users`, {
+  updateUserStatus: async function (payload: any) {
+    const res = await fetch(`${API_URL}/users`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        
       },
-      credentials:"include",
+      credentials: "include",
       body: JSON.stringify(payload),
     });
 
@@ -56,5 +55,5 @@ export const userService = {
     }
 
     return res.json();
-  }
+  },
 };

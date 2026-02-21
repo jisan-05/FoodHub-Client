@@ -29,7 +29,7 @@ const CreateProviderProfile = () => {
     setErrorMsg("");
 
     try {
-      const res = await fetch(`${API_URL}/api/provider/profile`, {
+      const res = await fetch(`/api/provider/profile`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

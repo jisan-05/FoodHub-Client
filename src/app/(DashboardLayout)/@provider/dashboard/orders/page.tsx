@@ -39,6 +39,8 @@ type Order = {
   customer: Customer;
 };
 
+
+
 const ProviderDashboard = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
@@ -48,7 +50,7 @@ const ProviderDashboard = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/provider/orders`, {
+      const res = await fetch(`/api/provider/orders`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -65,30 +67,29 @@ const ProviderDashboard = () => {
   }, []);
 
   // Update order status
-  const handleStatusChange = async (orderId: string, status: string) => {
-    try {
-      const res = await fetch(`${API_URL}/api/provider/orders/${orderId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-        credentials: "include",
-      });
+ const handleStatusChange = async (orderId: string, status: string) => {
+  try {
+    const res = await fetch(`/api/provider/orders/${orderId}/update-status`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status }),
+    });
 
-      if (!res.ok) throw new Error("Failed to update status");
+    if (!res.ok) throw new Error("Failed to update status");
 
-      setToastMsg("Order status updated!");
-      setTimeout(() => setToastMsg(""), 2000);
+    setToastMsg("Order status updated!");
+    setTimeout(() => setToastMsg(""), 2000);
 
-      // Refresh orders
-      fetchOrders();
-    } catch (error: any) {
-      console.error(error);
-      setToastMsg(error.message || "Error updating status");
-      setTimeout(() => setToastMsg(""), 3000);
-    }
-  };
+    // Refresh orders
+    fetchOrders();
+  } catch (error: any) {
+    console.error(error);
+    setToastMsg(error.message || "Error updating status");
+    setTimeout(() => setToastMsg(""), 3000);
+  }
+};
 
   return (
     <div className="min-h-screen p-6 bg-gray-50">

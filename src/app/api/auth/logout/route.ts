@@ -4,12 +4,25 @@ import { NextResponse } from "next/server";
 export async function POST() {
   const res = NextResponse.json({ message: "Logged out" });
 
-  // Clear the HttpOnly cookie
+  // Clear session token
   res.cookies.set({
-    name: "better-auth.session_token",
+    name: "__Secure-better-auth.session_token",
     value: "",
     path: "/",
-    httpOnly: true, // must match how it was set
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    expires: new Date(0),
+  });
+
+  // Clear session data
+  res.cookies.set({
+    name: "__Secure-better-auth.session_data",
+    value: "",
+    path: "/",
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
     expires: new Date(0),
   });
 

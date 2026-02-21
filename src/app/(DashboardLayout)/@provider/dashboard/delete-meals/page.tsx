@@ -13,6 +13,20 @@ type Meal = {
   image?: string | null;
 };
 
+const getSafeImage = (url?: string | null) => {
+  if (!url) return "/placeholder.png";
+
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+      return url;
+    }
+    return "/placeholder.png";
+  } catch {
+    return "/placeholder.png";
+  }
+};
+
 const ShowAllMeals = () => {
   const [meals, setMeals] = useState<Meal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,19 +52,20 @@ const ShowAllMeals = () => {
   }, []);
 
   // DELETE handler
-  const handleDelete = async (mealId: string) => {
-    if (!confirm("Are you sure you want to delete this meal?")) return;
+const handleDelete = async (mealId: string) => {
+  if (!confirm("Are you sure you want to delete this meal?")) return;
 
-    try {
-      const token = localStorage.getItem("accessToken") || "";
-      await mealsService.deleteMeal(mealId, token);
+  try {
+    const res = await fetch(`/api/meals/delete/${mealId}`, { method: "DELETE" });
+    if (!res.ok) throw new Error("Failed to delete meal");
 
-      // Remove from UI instantly
-      setMeals((prev) => prev.filter((meal) => meal.id !== mealId));
-    } catch (err: any) {
-      alert(err.message || "Failed to delete meal");
-    }
-  };
+    // Update UI instantly
+    setMeals(prev => prev.filter(meal => meal.id !== mealId));
+  } catch (err: any) {
+    alert(err.message);
+  }
+};
+
 
   if (loading) return <p className="text-center mt-10">Loading meals...</p>;
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>;
@@ -70,7 +85,7 @@ const ShowAllMeals = () => {
             >
               <div className="relative h-48">
                 <Image
-                  src={meal.image || "/placeholder.png"}
+                  src={getSafeImage(meal.image)}
                   alt={meal.name}
                   fill
                   className="object-cover"

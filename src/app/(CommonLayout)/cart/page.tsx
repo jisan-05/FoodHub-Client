@@ -1,9 +1,6 @@
 "use client";
 
 
-
-
-
 import CartEmpty from "@/components/ui/CartEmpty";
 import { ordersService } from "@/services/orders.service";
 import { useEffect, useState } from "react";
