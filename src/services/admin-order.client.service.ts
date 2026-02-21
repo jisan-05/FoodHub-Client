@@ -12,20 +12,23 @@ export interface AdminOrder {
   updatedAt: string;
 }
 
+interface AdminOrdersResponse {
+  data: AdminOrder[];
+}
+
 export const adminOrderClientService = {
-  getAllOrders: async () => {
+  getAllOrders: async (): Promise<{ data: AdminOrder[] | null; error: any }> => {
     try {
-      const res = await fetch(`${API_URL}/api/admin/orders`, {
+      const res = await fetch(`/api/admin/orders`, {
         credentials: "include",
         cache: "no-store",
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch orders");
-      }
+      if (!res.ok) throw new Error("Failed to fetch orders");
 
-      const data: AdminOrder[] = await res.json();
-      return { data, error: null };
+      const json: AdminOrdersResponse = await res.json();
+
+      return { data: json.data, error: null }; // ← unwrap .data here
     } catch (error) {
       console.error("Admin orders fetch error:", error);
       return { data: null, error: { message: "Failed to fetch orders" } };

@@ -40,7 +40,7 @@ const MyOrders = () => {
 
 const handleSubmitReview = async (payload: ReviewPayload) => {
   try {
-    const resGet = await fetch(`${API_URL}/api/customer/reviews`, {
+    const resGet = await fetch(`/api/customer/reviews/get`, {
       method: "GET",
       credentials: "include",
     });
@@ -61,7 +61,7 @@ const handleSubmitReview = async (payload: ReviewPayload) => {
     }
 
     const resPost = await fetch(
-      `${API_URL}/api/customer/reviews`,
+      `/api/customer/reviews`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

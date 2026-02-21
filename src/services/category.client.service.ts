@@ -31,7 +31,7 @@ export const categoryClientService = {
     id: string,
     payload: { name: string; image: string }
   ) => {
-    const res = await fetch(`${API_URL}/api/categories/${id}`, {
+    const res = await fetch(`/api/categories/update/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const categoryClientService = {
   },
 
   deleteCategory: async (id: string) => {
-    const res = await fetch(`${API_URL}/api/categories/${id}`, {
+    const res = await fetch(`/api/categories/delete/${id}`, {
       method: "DELETE",
       credentials: "include",
     });

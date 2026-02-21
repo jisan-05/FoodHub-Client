@@ -3,7 +3,7 @@ const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 export const userClientService = {
   getAllUser: async () => {
     try {
-      const res = await fetch(`${API_URL}/api/users`, {
+      const res = await fetch(`/api/users`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -17,7 +17,7 @@ export const userClientService = {
     userId: string;
     status: "ACTIVATE" | "SUSPENDED";
   }) => {
-    const res = await fetch(`${API_URL}/api/users`, {
+    const res = await fetch(`/api/users`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

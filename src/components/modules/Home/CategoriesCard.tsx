@@ -4,25 +4,33 @@ type Category = {
   id: string;
   name: string;
   description?: string | null;
-  image: string;
+  image?: string | null;
 };
 
 type Props = {
   category: Category;
 };
 
+// fallback image in public folder
+const SAFE_IMAGE = "/images/fallback.png";
+
 const CategoryCard = ({ category }: Props) => {
+  // Use safe image URL first
+  const imgSrc =
+    category.image && category.image.startsWith("http")
+      ? category.image
+      : SAFE_IMAGE;
+
   return (
     <div className="group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
       {/* Image */}
       <div className="relative h-48 w-full">
         <Image
-          src={category.image}
+          src={imgSrc}
           alt={category.name}
           fill
-          
-          priority
           className="object-cover transition-transform duration-500 group-hover:scale-110"
+          // priority // optional
         />
 
         {/* Gradient overlay */}
@@ -42,7 +50,7 @@ const CategoryCard = ({ category }: Props) => {
         )}
 
         <span className="mt-3 inline-block rounded-full bg-white/20 px-3 py-1 text-xs backdrop-blur">
-          Browse Category 
+          Browse Category
         </span>
       </div>
     </div>

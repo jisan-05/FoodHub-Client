@@ -32,10 +32,11 @@ const ManageUserProfile = () => {
     setError(null);
     try {
       const { data, error } = await userClientService.getAllUser();
+      console.log("API Response:", data);
       if (error) {
         setError(error.message);
       } else {
-        setUsers(data);
+        setUsers(data.data);
       }
     } catch {
       setError("Something went wrong while fetching users");

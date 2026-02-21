@@ -25,7 +25,7 @@ const AddCategoryPage = () => {
     try {
       setLoading(true);
 
-      const res = await fetch(`${API_URL}/api/categories`, {
+      const res = await fetch(`/api/categories`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
