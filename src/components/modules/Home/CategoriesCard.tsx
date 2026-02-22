@@ -11,22 +11,17 @@ type Props = {
   category: Category;
 };
 
-// fallback image in public folder
-const SAFE_IMAGE = "/images/fallback.png";
+
 
 const CategoryCard = ({ category }: Props) => {
   // Use safe image URL first
-  const imgSrc =
-    category.image && category.image.startsWith("http")
-      ? category.image
-      : SAFE_IMAGE;
-
+ 
   return (
     <div className="group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
       {/* Image */}
       <div className="relative h-48 w-full">
         <Image
-          src={imgSrc}
+          src={category.image || "images/restaurant-placeholder.jpg"}
           alt={category.name}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"

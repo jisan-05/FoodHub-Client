@@ -14,8 +14,7 @@ type Props = {
 
 export const dynamic = "force-dynamic";
 
-const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL
-
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const EditProfileForm = ({ user }: Props) => {
   const [formData, setFormData] = useState({
@@ -32,34 +31,37 @@ const EditProfileForm = ({ user }: Props) => {
 
   const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, image: URL.createObjectURL(e.target.files[0]) });
+      setFormData({
+        ...formData,
+        image: URL.createObjectURL(e.target.files[0]),
+      });
     }
   };
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setLoading(true);
-  setMessage(null);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
 
-  try {
-    const res = await fetch(`/api/users/me/update-profile`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: formData.name, image: formData.image }),
-    });
+    try {
+      const res = await fetch(`/api/users/me/update-profile`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: formData.name, image: formData.image }),
+      });
 
-    if (!res.ok) throw new Error("Failed to update profile");
+      if (!res.ok) throw new Error("Failed to update profile");
 
-    const data = await res.json();
-    setMessage("Profile updated successfully!");
-    setTimeout(() => window.location.reload(), 1000);
-  } catch (err: any) {
-    setMessage(err.message || "Something went wrong");
-    console.error(err);
-  } finally {
-    setLoading(false);
-  }
-};
+      const data = await res.json();
+      setMessage("Profile updated successfully!");
+      setTimeout(() => window.location.reload(), 1000);
+    } catch (err: any) {
+      setMessage(err.message || "Something went wrong");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -76,8 +78,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             className="w-24 h-24 rounded-full object-cover border-4 border-indigo-500"
           />
 
-          
 
+          <label className="block text-gray-600 font-medium mb-1">Image Url</label>
           {/* Image URL Input */}
           <input
             type="text"
@@ -95,16 +97,19 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             <label className="block text-gray-600 font-medium mb-1">Name</label>
             <input
               type="text"
+              readOnly
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 text-gray-500 cursor-not-allowed"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-600 font-medium mb-1">Email</label>
+            <label className="block text-gray-600 font-medium mb-1">
+              Email
+            </label>
             <input
               type="email"
               name="email"

@@ -18,11 +18,11 @@ const SingleMenupage = async ({
   const meals = mealsResponse.data;
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-6">Menu</h1>
+    <div className="p-4 ">
+      <h1 className="text-4xl font-bold my-6 text-center">Menu</h1>
 
       {meals && meals.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {meals.map((meal: any) => (
             <div
               key={meal.id}

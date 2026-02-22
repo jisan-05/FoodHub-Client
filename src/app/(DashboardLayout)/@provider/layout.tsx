@@ -22,19 +22,19 @@ const layout = ({ children }: { children: React.ReactNode }) => {
           >
             create-provider-profile
           </a>
-
+          <a
+            href="/dashboard/add-menu-items"
+            className="text-gray-700 font-medium hover:text-blue-500"
+          >
+            Add Meals Items
+          </a>
           <a
             href="/dashboard/delete-meals"
             className="text-gray-700 font-medium hover:text-blue-500"
           >
             Update & Delete Meals
           </a>
-          <a
-            href="/dashboard/add-menu-items"
-            className="text-gray-700 font-medium hover:text-blue-500"
-          >
-            Add Menu Items
-          </a>
+
           <a
             href="/dashboard/orders"
             className="text-gray-700 font-medium hover:text-blue-500"
