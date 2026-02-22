@@ -20,6 +20,7 @@ import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
@@ -131,7 +132,7 @@ export function LoginForm({
                 </Button>
 
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="#">Sign up</a>
+                  Don&apos;t have an account? <Link href="register">Sign up</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

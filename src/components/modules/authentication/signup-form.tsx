@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -214,7 +215,7 @@ const handleSignup = async (e: React.FormEvent) => {
               </Button>
 
               <FieldDescription className="px-6 text-center">
-                Already have an account? <a href="#">Sign in</a>
+                Already have an account? <Link href="/login">Sign in</Link>
               </FieldDescription>
             </Field>
           </FieldGroup>
